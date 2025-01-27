@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
+import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
+  output: 'standalone', // Para permitir el prerenderizado en modo estático
 };
 
 export default nextConfig;

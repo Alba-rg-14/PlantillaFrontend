@@ -37,7 +37,13 @@ export default function Navbar() {
             onClick={() => router.push("/home")}
             className="bg-white text-pink-800 border border-pink-300 rounded-full px-4 py-2 font-bold shadow transform transition-transform hover:scale-105"
           >
-            Home
+            Salas
+          </Button>
+          <Button
+            onClick={() => router.push("/homePelis")}
+            className="bg-white text-pink-800 border border-pink-300 rounded-full px-4 py-2 font-bold shadow transform transition-transform hover:scale-105"
+          >
+            Peliculas
           </Button>
           <Button
             onClick={() => router.push("/pagina3")}
@@ -51,6 +57,8 @@ export default function Navbar() {
           >
             Logs
           </Button>
+
+
 
           {/* Botón de cerrar sesión */}
           {session ? (

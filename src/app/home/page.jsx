@@ -6,7 +6,7 @@ import Navbar from "@/components/navbar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import MapWithMarkers from "@/components/MapWithMarkers";
-import Card from "@/components/Card";
+import CardSala from "@/components/CardSala";
 import Swal from 'sweetalert2'
 
 
@@ -14,7 +14,7 @@ const BACKEND_BASE_API = process.env.NEXT_PUBLIC_MONGO_DB_URI;
 
 export default function Pagina() {
   const { data: session, status } = useSession();
-  const [entidades, setEntidades] = useState([]);
+  const [salas, setSalas] = useState([]);
   const [markers, setMarkers] = useState([]);
   const router = useRouter();
   const Swal = require('sweetalert2')
@@ -22,40 +22,40 @@ export default function Pagina() {
   // Si la sesión aún está cargando, retorna un mensaje de carga
   useEffect(() => {
     if (session) {
-      fetchEntidades();  // Llamada solo si hay sesión
+      fetchSalas();  // Llamada solo si hay sesión
     }
   }, [session]); // Reaccionar cuando session cambie
 
-  const fetchEntidades = useCallback(async () => {
+  const fetchSalas = useCallback(async () => {
     try {
-      const response = await axios.get(`${BACKEND_BASE_API}/entidades/todas`, {
+      const response = await axios.get(`${BACKEND_BASE_API}/salas`, {
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
           "Content-Type": "application/json",
         },
       });
-      const entidadesData = response.data;
-      setEntidades(entidadesData);
+      const salasData = response.data;
+      setSalas(salasData);
 
       // Extraer las coordenadas para los marcadores
-      const markersData = entidadesData.map((e) => ({
+      const markersData = salasData.map((e) => ({
         lat: e.coordenadas.latitud,
         lon: e.coordenadas.longitud,
         nombre: e.nombre,
       }));
       setMarkers(markersData);
     } catch (error) {
-      console.error("Error al obtener las entidades:", error);
+      console.error("Error al obtener las salas:", error);
     }
   }, [session]);
 
-  const navigateAddEntidad = () => {
-    router.push("/add-entidad");
+  const navigateAddSala = () => {
+    router.push("/add-sala");
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${BACKEND_BASE_API}/entidades/borrar/${id}`, {
+      await axios.delete(`${BACKEND_BASE_API}/salas/${id}`, {
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
           "Content-Type": "application/json",
@@ -64,13 +64,13 @@ export default function Pagina() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "xxx se ha eliminado con éxito",
+        title: "La sala se ha eliminado con éxito",
         showConfirmButton: false,
         timer: 1500
       });
-      fetchEntidades();
+      fetchSalas();
     } catch (error) {
-      console.error("Error al eliminar el restaurante:", error);
+      console.error("Error al eliminar la sala:", error);
       Swal.fire({
         position: "center",
         icon: "error",
@@ -82,7 +82,7 @@ export default function Pagina() {
   };
 
   const handleUpdate = async (id) => {
-    router.push(`/editar-entidad/${id}`);
+    router.push(`/editar-sala/${id}`);
   };
 
 
@@ -94,30 +94,29 @@ export default function Pagina() {
         {/* Mapa fijo con botón */}
         <div className="relative bg-white p-6 rounded-3xl shadow-md">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-4xl font-bold text-pink-800">Mapa de Entidades</h1>
+            <h1 className="text-4xl font-bold text-pink-800">Estas son las salas disponibles:</h1>
             <Button
-              onClick={navigateAddEntidad}
+              onClick={navigateAddSala}
               className="bg-pink-300 text-pink-900 rounded-full px-4 py-2 font-semibold hover:scale-105 transition-transform"
             >
-              Crear Nueva Entidad
+              Crear Nueva Sala
             </Button>
           </div>
           <MapWithMarkers markers={markers} defaultZoom={5} />
         </div>
 
-        {/* Lista de entidades */}
+        {/* Lista de salas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {entidades.length === 0 ? (
+          {salas.length === 0 ? (
             <p className="text-center text-gray-600 col-span-full">
-              No hay entidades disponibles en este momento.
+              No hay salas disponibles en este momento.
             </p>
           ) : (
-            entidades.map((e) => (
-              <Card
+            salas.map((e) => (
+              <CardSala
                 key={e._id}
                 title={e.nombre}
                 subtitle={e.direccion}
-                images={e.imagenes}
                 onDetailsClick={() => router.push(`/detalles/${e._id}`)}
                 actions={[
                   {
