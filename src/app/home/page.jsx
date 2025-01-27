@@ -85,11 +85,6 @@ export default function Pagina() {
     router.push(`/editar-entidad/${id}`);
   };
 
-  useEffect(() => {
-    if (session) {
-      fetchEntidades();
-    }
-  }, [session, fetchEntidades]);
 
   return (
     <div className="min-h-screen bg-gray-100">
