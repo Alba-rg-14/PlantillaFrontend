@@ -56,7 +56,7 @@ const authOptions = {
       session.accessToken = token.access_token;  // Guardar el token en la sesión
       return session;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       // Redirige al usuario a /home después del inicio de sesión exitoso
       return `${baseUrl}/home`;
     },
