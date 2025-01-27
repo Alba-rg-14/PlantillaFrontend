@@ -76,11 +76,11 @@ export default function PaginaLogs() {
                   <strong className="text-pink-600">Email:</strong> {log.email}
                 </p>
                 <p className="text-lg text-gray-700 break-words">
-                  <strong className="text-pink-600">Acción:</strong> {log.accion}
+                  <strong className="text-pink-600">Token expirity:</strong> {log.tokenExpiry}
                 </p>
                 <p className="text-lg text-gray-700 break-words">
-                  <strong className="text-pink-600">Detalles:</strong>{" "}
-                  {JSON.stringify(log.detalles)}
+                  <strong className="text-pink-600">Token:</strong>{" "}
+                  {log.token}
                 </p>
               </div>
             ))
