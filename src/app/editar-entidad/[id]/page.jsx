@@ -105,7 +105,7 @@ export default function ActualizarEntidad() {
         };
 
         try {
-            const res = await axios.put(`${BACKEND_BASE_API}/entidades/${id}`, data, {
+            const res = await axios.put(`${BACKEND_BASE_API}/entidades/actualizar/${id}`, data, {
                 headers: {
                     Authorization: `Bearer ${session.accessToken}`,
                     "Content-Type": "application/json",
