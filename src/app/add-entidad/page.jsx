@@ -139,7 +139,7 @@ export default function Pagina() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-pink-50 to-pink-100 flex flex-col items-center py-8">
             <button
-                onClick={() => window.history.back()} // Cambia esta función si necesitas un comportamiento diferente
+                onClick={() => router.push("/home")} // Cambia esta función si necesitas un comportamiento diferente
                 className="fixed top-4 left-4 w-12 h-12 bg-pink-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-pink-700 transition transform hover:scale-105"
                 title="Volver"
             >
